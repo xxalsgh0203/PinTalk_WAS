@@ -71,6 +71,8 @@ public class UserMember extends BaseEntity {
     private String address2;
     @Column(columnDefinition = "varchar(4) null comment '직업코드'")
     private String jobkey;
+    @Column(columnDefinition = "varchar(1) not null comment '관리자여부'")
+    private String admin_yn;
     @Column(columnDefinition = "varchar(1) not null comment '탈퇴여부'")
     private String saveStatus;
 
