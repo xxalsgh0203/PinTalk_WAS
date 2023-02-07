@@ -1,12 +1,10 @@
 export default class HttpError extends Error {
-  #statusCode;
-  constructor(statusCode, message) {
+  constructor(private statusCode: number, message: string) {
     super(message);
-    this.#statusCode = statusCode;
   }
 
   get errorMessage() {
-    switch (this.#statusCode) {
+    switch (this.statusCode) {
       case 400:
         this.message = '잘못된 요청입니다.';
         break;
@@ -21,6 +19,7 @@ export default class HttpError extends Error {
         break;
       case 500:
         this.message = '내부 서버 오류';
+        break;
       default:
         throw new Error('Unknown Error');
     }
