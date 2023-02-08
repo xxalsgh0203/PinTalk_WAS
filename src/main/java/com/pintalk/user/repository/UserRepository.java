@@ -13,12 +13,9 @@ import java.util.List;
 public interface UserRepository extends JpaRepository<UserMember, Integer> {
 
     //유저 전체 리스트
-    Page<UserMember> findUserMemberBy(Pageable pageable);
     Page<UserMember> findAll(Specification<UserMember> spec, Pageable pageable);
 
-    List<UserMember> findUserMemberByIdLike(String id);
-    List<UserMember> findPasswordByIdContains(String id);
-    Boolean findAllByIdLikeAndPasswordLike(String id, String password);
+    List<UserMember> findAllByIdLike(String id);
 
 
 }

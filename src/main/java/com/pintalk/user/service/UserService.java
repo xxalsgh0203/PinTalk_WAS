@@ -21,10 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -41,7 +38,6 @@ public class UserService {
 
     Logger log = LoggerFactory.getLogger(getClass().getName());
 
-
     /**
      * 로그인 체크
      *
@@ -49,23 +45,19 @@ public class UserService {
      * @param password
      * @return
      */
-    public boolean login(@RequestParam("id") String id, @RequestParam("password") String password) {
-        log.debug("==================UserService.loginChk.START==================");
-        Boolean result;
+    public List login(@RequestParam("id") String id, @RequestParam("password") String password) {
+        log.debug("==================UserService.login.START==================");
+        List<UserMember> search = repository.findAllByIdLike(id);
         try {
-            List<UserMember> userMember = repository.findUserMemberByIdLike(id);
-            String encodePassword = userMember.stream().map(a -> a.getPassword()).collect(Collectors.toList()).toString();
-            if (webSecurityConfig.getPasswordEncoder().matches(password, encodePassword)) {
-                result = true;
-            } else {
-                result = false;
+            String encodePassword = search.stream().map(searchKey -> searchKey.getPassword()).collect(Collectors.joining()).toString();
+            if (!webSecurityConfig.getPasswordEncoder().matches(password, encodePassword)) {
+                search = null;
             }
         } catch (Exception e) {
-            result = false;
             e.printStackTrace();
         }
-        log.debug("==================UserService.loginChk.END==================");
-        return result;
+        log.debug("==================UserService.login.END==================");
+        return search;
 
     }
 
