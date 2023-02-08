@@ -1,8 +1,8 @@
 package com.pintalk.account.entity;
 
+import com.pintalk.common.entity.BaseEntity;
 import com.pintalk.user.entity.UserMember;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -12,7 +12,11 @@ import java.util.List;
 @Table(name = "account")
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Account {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "ACCOUNT_GENERATOR")
     @Column(columnDefinition = "int not null comment '계좌_SEQ'")
@@ -22,10 +26,11 @@ public class Account {
     @JoinColumn(name = "user_member_no")
     private UserMember userMember;
 
+
     @Column(columnDefinition = "varchar(24) not null comment '핀테크이용번호'")
     private String finTechUseNum;
 
-    @Column(columnDefinition = "varchar(50) not null comment '계좌별명'")
+    @Column(columnDefinition = "varchar(50) null comment '계좌별명'")
     private String alias;
 
     @Column(columnDefinition = "varchar(3) not null comment '출금(개설)기관.대표코드'")
@@ -75,5 +80,7 @@ public class Account {
     
     @OneToMany(mappedBy = "account")
     private List<AccountHist> accountHists = new ArrayList<>();
+
+
 
 }
