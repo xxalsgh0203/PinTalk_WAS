@@ -1,9 +1,9 @@
 package com.pintalk.common.entity;
 
+import com.pintalk.user.entity.UserMember;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -37,6 +37,33 @@ public class Param extends BaseEntity {
         param.setModifyDateEnd(param.getModifyDateEnd());
         param.setStatus(param.getStatus());
         param.setSaveStatus(param.getSaveStatus());
+
+        return param;
+    }
+
+    @RequestMapping(method = RequestMethod.GET, path = {"/accountList","/accountListForm"})
+    public Param getAccountParam(Param param){
+
+//        param.setUserMember(param.getUserMember());
+        param.setFinTechUseNum(param.getFinTechUseNum());
+        param.setAlias(param.getAlias());
+        param.setBankCodeStd(param.getBankCodeStd());
+        param.setBankCodeSub(param.getBankCodeSub());
+        param.setBankName(param.getBankName());
+        param.setSavingsBankName(param.getSavingsBankName());
+        param.setHolderName(param.getHolderName());
+        param.setHolderType(param.getHolderType());
+        param.setType(param.getType());
+        param.setAccountNo(param.getAccountNo());
+        param.setInquiryAgreeYn(param.getInquiryAgreeYn());
+        param.setInquiryAgreeDt(param.getInquiryAgreeDt());
+        param.setTransferAgree_yn(param.getTransferAgree_yn());
+        param.setTransferAgreeDt(param.getTransferAgreeDt());
+        param.setState(param.getState());
+        param.setCreateDT(param.getCreateDT());
+        param.setModifyDT(param.getModifyDT());
+//        param.setModifyDT(param.getModifyDT());
+//        param.setAccountHists(param.getAccountHists());
 
         return param;
     }
@@ -79,4 +106,26 @@ public class Param extends BaseEntity {
     private LocalDateTime update_Date;
 
 
+
+
+
+    private UserMember userMember;
+    private String finTechUseNum;
+    private String alias;
+    private String bankCodeStd;
+    private String bankCodeSub;
+    private String bankName;
+    private String savingsBankName;
+    private String HolderName;
+    private String HolderType;
+    private String type;
+    private String accountNo;
+    private String inquiryAgreeYn;
+    private String inquiryAgreeDt;
+    private String transferAgree_yn;
+    private String transferAgreeDt;
+    private String State;
+    private String createDT;
+    private String modifyDT;
+//    private List<AccountHist> accountHists = new ArrayList<>();
 }
