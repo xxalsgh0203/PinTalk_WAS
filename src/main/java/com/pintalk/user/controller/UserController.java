@@ -30,20 +30,17 @@ public class UserController {
     @Autowired
     ComCodeService comCodeService;
 
-    Util util = new Util();
-
     /**
      * 로그인 체크
-     * @param id
-     * @param password
+     * @param param
      * @return
      */
     @RequestMapping(method = RequestMethod.POST, path = "/login")
-    public String login(@RequestParam String id, @RequestParam String password) {
+    public String login(@RequestBody Param param) {
         log.debug("==================UserController.login.START==================");
         String result ="";
         try {
-            List<UserMember> search = userservice.login(id,password);
+            List<UserMember> search = userservice.login(param.getId(),param.getPassword());
             String admin = search.stream().map(userMember -> userMember.getAdmin_yn()).collect(Collectors.joining()).toString();
             if(admin.equals("Y")){
                 result = "admin";

@@ -84,7 +84,7 @@ public class UserMember extends BaseEntity {
     @Column(columnDefinition = "varchar(8) not null comment '정보수정 날짜(문자열)'")
     private String modifyDate;
 
-    @Column(columnDefinition = "int null comment '사용자 등록계좌 개수'")
+    @Column(columnDefinition = "varchar(2) null comment '사용자 등록계좌 개수'")
     private String resCnt;
 
 
