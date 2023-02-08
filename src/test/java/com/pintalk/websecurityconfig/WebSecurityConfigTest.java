@@ -47,7 +47,7 @@ public class WebSecurityConfigTest {
         String pw = webSecurityConfig.getPasswordEncoder().encode(rawPw);
 
 
-        List<UserMember> list = userRepository.findUserMemberByIdLike(id);
+        List<UserMember> list = userRepository.findAllByIdLike(id);
         String dbPw = list.stream().map(userMember -> userMember.getPassword()).collect(Collectors.toList()).toString();
 
         assertThat(rawPw).isNotEqualTo(pw);
