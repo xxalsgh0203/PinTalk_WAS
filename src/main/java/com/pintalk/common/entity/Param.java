@@ -1,5 +1,6 @@
 package com.pintalk.common.entity;
 
+import com.pintalk.account.entity.AccountHist;
 import com.pintalk.user.entity.UserMember;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -15,6 +18,14 @@ import java.time.LocalDateTime;
 public class Param extends BaseEntity {
 
     public Param getParamObject(Param param){
+        return param;
+    }
+
+    @RequestMapping(method = RequestMethod.GET, path = "/login")
+    public Param getLoginParam(Param param){
+
+        param.setId(param.getId());
+        param.setPassword(param.getPassword());
         return param;
     }
 
@@ -44,7 +55,7 @@ public class Param extends BaseEntity {
     @RequestMapping(method = RequestMethod.GET, path = {"/accountList","/accountListForm"})
     public Param getAccountParam(Param param){
 
-//        param.setUserMember(param.getUserMember());
+        param.setUserMember(param.getUserMember());
         param.setFinTechUseNum(param.getFinTechUseNum());
         param.setAlias(param.getAlias());
         param.setBankCodeStd(param.getBankCodeStd());
@@ -60,9 +71,8 @@ public class Param extends BaseEntity {
         param.setTransferAgree_yn(param.getTransferAgree_yn());
         param.setTransferAgreeDt(param.getTransferAgreeDt());
         param.setState(param.getState());
-        param.setCreateDT(param.getCreateDT());
-        param.setModifyDT(param.getModifyDT());
-//        param.setModifyDT(param.getModifyDT());
+        param.setCreateDt(param.getCreateDt());
+        param.setModifyDt(param.getModifyDt());
 //        param.setAccountHists(param.getAccountHists());
 
         return param;
@@ -125,7 +135,7 @@ public class Param extends BaseEntity {
     private String transferAgree_yn;
     private String transferAgreeDt;
     private String State;
-    private String createDT;
-    private String modifyDT;
-//    private List<AccountHist> accountHists = new ArrayList<>();
+    private String createDt;
+    private String modifyDt;
+    private List<AccountHist> accountHists = new ArrayList();
 }
