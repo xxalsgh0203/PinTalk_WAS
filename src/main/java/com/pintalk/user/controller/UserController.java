@@ -16,9 +16,8 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 public class UserController {
@@ -40,14 +39,25 @@ public class UserController {
      * @return
      */
     @RequestMapping(method = RequestMethod.POST, path = "/login")
-    public boolean login(@RequestParam String id, @RequestParam String password) {
-        Boolean result;
+    public String login(@RequestParam String id, @RequestParam String password) {
+        log.debug("==================UserController.login.START==================");
+        String result ="";
         try {
-            result = userservice.login(id,password);
+            List<UserMember> search = userservice.login(id,password);
+            String admin = search.stream().map(userMember -> userMember.getAdmin_yn()).collect(Collectors.joining()).toString();
+            if(admin.equals("Y")){
+                result = "admin";
+            } else if(admin.equals("N")){
+                result = "user";
+            } else {
+                result = "null";
+            }
+        } catch (NullPointerException e) {
+            result = "null";
         } catch (Exception e) {
-            result = false;
             e.printStackTrace();
         }
+        log.debug("==================UserController.login.END==================");
         return result;
     }
 
@@ -61,25 +71,18 @@ public class UserController {
             @PageableDefault(page = 0, size = 10, sort = "no", direction = Sort.Direction.DESC) Pageable pageable
             ,Param param
     ) throws ParseException {
-        log.debug("==================GetMapping.UserController.getUserMemberList.START==================");
+        log.debug("==================UserController.getUserMemberList.START==================");
 
-        Page<UserMember> list = null;
         List result_li = new ArrayList();
         HashMap result_hs = new HashMap();
 
-        int currPage = 0;
+        Page<UserMember> list = null;
         if(param.getParamObject(param) == null){
             list = userservice.userMemberList(pageable);
         } else {
-            HashMap map = util.convertObjectToMap(param);
             list = userservice.userMemberListSearch(param, pageable);
         }
-
-        log.debug("검색 리스트 : " + list);
-        log.debug("=======================================");
-
-        currPage = list.getPageable().getPageNumber();
-
+        int currPage = list.getPageable().getPageNumber();
         int totalPage = list.getTotalPages();
         int startPage = (int) Math.floor(currPage / 10) * 10;
         int endPage = Math.min(totalPage, startPage + 10);
@@ -95,8 +98,7 @@ public class UserController {
         result_li.add(list.getContent());
         result_li.add(result_hs);
 
-        log.debug("최종 결과 리턴 값 : " + result_li);
-        log.debug("==================GetMapping.UserController.getUserMemberList.END==================");
+        log.debug("==================UserController.getUserMemberList.END==================");
         return result_li;
     }
 
@@ -107,14 +109,14 @@ public class UserController {
      */
     @GetMapping("/userMemberDetail/{no}")
     public List userMemberDetail(@PathVariable int no) {
-        log.debug("==================GetMapping.UserController.userMemberDetail.START==================");
+        log.debug("==================UserController.userMemberDetail.START==================");
 
         List<UserMember> result_li = new ArrayList();
         result_li.add(userservice.userMemberDetail(no));
 
         log.debug("============================");
         log.debug("최종 결과값 : " +result_li);
-        log.debug("==================GetMapping.UserController.userMemberDetail.END==================");
+        log.debug("==================UserController.userMemberDetail.END==================");
         return result_li;
     }
 
@@ -125,9 +127,9 @@ public class UserController {
      */
     @RequestMapping(value = "/userMemberDetailModify", method = RequestMethod.POST)
     public boolean userMemberDetailModify(@RequestBody Param param) {
-        log.debug("==================POST.UserController.userMemberDetailModify.START==================");
+        log.debug("==================UserController.userMemberDetailModify.START==================");
         boolean result = userservice.userMemberDetailModify(param);
-        log.debug("==================POST.UserController.userMemberDetailModify.END==================");
+        log.debug("==================UserController.userMemberDetailModify.END==================");
         return result;
     }
     /**
@@ -135,19 +137,13 @@ public class UserController {
      * @throws ParseException
      */
     @RequestMapping(value = "/userMemberInsertView", method = RequestMethod.GET)
-    public HashMap getUserMemberInsertView() {
-        log.debug("==================GET.UserController.getUserMemberInsertView.START==================");
-
-        HashMap resultMap = new HashMap();
-
+    public List getUserMemberInsertView() {
+        log.debug("==================UserController.getUserMemberInsertView.START==================");
         List result_li = new ArrayList();
         List<ComCode> comCodes = comCodeService.getComCode("EMAIL");
         result_li.add(comCodes);
-        resultMap.put("comCodes",result_li);
-
-        log.debug("==================GET.UserController.getUserMemberInsertView.END==================");
-
-        return resultMap;
+        log.debug("==================UserController.getUserMemberInsertView.END==================");
+        return result_li;
     }
     /**
      * 회원 신규 처리
@@ -156,11 +152,9 @@ public class UserController {
      */
     @RequestMapping(value = "/userMemberInsert", method = RequestMethod.POST)
     public boolean getUserMemberInsert(@RequestBody HashMap resMap) throws ParseException {
-        log.debug("==================POST.UserController.getUserMemberInsert.START==================");
-        boolean result = userservice.userMemberInsert(resMap);
-        log.debug("최종 결과 반환 : " + result);
-        log.debug("==================POST.UserController.getUserMemberInsert.END==================");
+        log.debug("==================UserController.getUserMemberInsert.START==================");
+        log.debug("==================UserController.getUserMemberInsert.END==================");
 
-        return result;
+        return userservice.userMemberInsert(resMap);
     }
 }

@@ -1,5 +1,6 @@
 package com.pintalk.user.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pintalk.account.entity.Account;
 import com.pintalk.common.entity.BaseEntity;
 import lombok.*;
@@ -32,8 +33,10 @@ public class UserMember extends BaseEntity {
     @Column(columnDefinition = "int not null comment '유저 고유번호'")
     private Integer no;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "userMember")
     private List<Account> accounts = new ArrayList<>();
+
 
     @Column(columnDefinition = "varchar(20) not null comment '아이디'")
     private String id;
@@ -83,7 +86,6 @@ public class UserMember extends BaseEntity {
 
     @Column(columnDefinition = "int null comment '사용자 등록계좌 개수'")
     private String resCnt;
-
 
 
 }
