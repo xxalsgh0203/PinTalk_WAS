@@ -1,6 +1,5 @@
 package com.pintalk.account.entity;
 
-import com.pintalk.common.entity.BaseEntity;
 import com.pintalk.user.entity.UserMember;
 import lombok.*;
 
@@ -20,7 +19,7 @@ public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "ACCOUNT_GENERATOR")
     @Column(columnDefinition = "int not null comment '계좌_SEQ'")
-    private Integer no;
+    private Integer accountSeq;
 
     @ManyToOne
     @JoinColumn(name = "user_member_no")
@@ -31,7 +30,7 @@ public class Account {
     private String finTechUseNum;
 
     @Column(columnDefinition = "varchar(50) null comment '계좌별명'")
-    private String alias;
+    private String accountAlias;
 
     @Column(columnDefinition = "varchar(3) not null comment '출금(개설)기관.대표코드'")
     private String bankCodeStd;
@@ -46,13 +45,16 @@ public class Account {
     private String savingsBankName;
 
     @Column(columnDefinition = "varchar(20) null comment '계좌예금주명'")
-    private String HolderName;
+    private String holderName;
+
+    @Column(columnDefinition = "int null comment '계좌잔액'")
+    private String accountBalance;
 
     @Column(columnDefinition = "varchar(1) not null comment '계좌구분(P:개인)'")
-    private String HolderType;
+    private String holderType;
 
     @Column(columnDefinition = "varchar(1) not null comment '계좌종류(‘1’:수시입출금, ‘2’:예적금, ‘6’:수익증권, ‘T’:종합계좌)'")
-    private String type;
+    private String accountType;
 
     @Column(columnDefinition = "varchar(20) not null comment '계좌번호'")
     private String accountNo;
@@ -70,14 +72,14 @@ public class Account {
     private String transferAgreeDt;
 
     @Column(columnDefinition = "varchar(2) not null comment '계좌상태(‘01’:사용, ‘09’:해지)'")
-    private String State;
+    private String state;
 
 
     @Column(columnDefinition = "varchar(14) not null comment '계좌개설 일시'")
-    private String createDT;
+    private String createDt;
     @Column(columnDefinition = "varchar(14) not null comment '계좌수정 일시'")
-    private String modifyDT;
-    
+    private String modifyDt;
+
     @OneToMany(mappedBy = "account")
     private List<AccountHist> accountHists = new ArrayList<>();
 

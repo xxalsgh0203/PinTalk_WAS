@@ -1,6 +1,5 @@
 package com.pintalk.user.controller;
 
-import com.function.Util;
 import com.pintalk.common.Service.ComCodeService;
 import com.pintalk.common.entity.ComCode;
 import com.pintalk.common.entity.Param;
