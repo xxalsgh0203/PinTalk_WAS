@@ -7,5 +7,4 @@ import java.util.List;
 
 public interface ComCodeRepository extends JpaRepository<ComCode, Long> {
     List<ComCode> findAllByCodeGroup(String codeGroup);
-    List<ComCode> findAllByCodeGroup(String[] codeGroup);
 }
