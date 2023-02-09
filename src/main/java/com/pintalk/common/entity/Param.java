@@ -52,31 +52,31 @@ public class Param extends BaseEntity {
         return param;
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = {"/accountList","/accountListForm"})
-    public Param getAccountParam(Param param){
-
-        param.setUserMember(param.getUserMember());
-        param.setFinTechUseNum(param.getFinTechUseNum());
-        param.setAlias(param.getAlias());
-        param.setBankCodeStd(param.getBankCodeStd());
-        param.setBankCodeSub(param.getBankCodeSub());
-        param.setBankName(param.getBankName());
-        param.setSavingsBankName(param.getSavingsBankName());
-        param.setHolderName(param.getHolderName());
-        param.setHolderType(param.getHolderType());
-        param.setType(param.getType());
-        param.setAccountNo(param.getAccountNo());
-        param.setInquiryAgreeYn(param.getInquiryAgreeYn());
-        param.setInquiryAgreeDt(param.getInquiryAgreeDt());
-        param.setTransferAgree_yn(param.getTransferAgree_yn());
-        param.setTransferAgreeDt(param.getTransferAgreeDt());
-        param.setState(param.getState());
-        param.setCreateDt(param.getCreateDt());
-        param.setModifyDt(param.getModifyDt());
+//    @RequestMapping(method = RequestMethod.GET, path = {"/accountList","/accountListForm"})
+//    public Param getAccountParam(Param param){
+//
+//        param.setUserMember(param.getUserMember());
+//        param.setFinTechUseNum(param.getFinTechUseNum());
+//        param.setAccountAlias(param.getAccountAlias());
+//        param.setBankCodeStd(param.getBankCodeStd());
+//        param.setBankCodeSub(param.getBankCodeSub());
+//        param.setBankName(param.getBankName());
+//        param.setSavingsBankName(param.getSavingsBankName());
+//        param.setHolderName(param.getHolderName());
+//        param.setHolderType(param.getHolderType());
+//        param.setAccountType(param.getAccountType());
+//        param.setAccountNo(param.getAccountNo());
+//        param.setInquiryAgreeYn(param.getInquiryAgreeYn());
+//        param.setInquiryAgreeDt(param.getInquiryAgreeDt());
+//        param.setTransferAgree_yn(param.getTransferAgree_yn());
+//        param.setTransferAgreeDt(param.getTransferAgreeDt());
+//        param.setState(param.getState());
+//        param.setCreateDt(param.getCreateDt());
+//        param.setModifyDt(param.getModifyDt());
 //        param.setAccountHists(param.getAccountHists());
-
-        return param;
-    }
+//
+//        return param;
+//    }
 
 
     private Integer no;             //유저 고유 번호
@@ -106,7 +106,7 @@ public class Param extends BaseEntity {
 
     private String signDate;        // 가입날짜
     private String modifyDate;      // 정보수정 날짜
-    
+
     private String signDateStart;   // 가입일자 시작
     private String signDateEnd;     // 가입일자 끝
     private String modifyDateStart; // 수정일자 시작
@@ -121,20 +121,20 @@ public class Param extends BaseEntity {
 
     private UserMember userMember;
     private String finTechUseNum;
-    private String alias;
+    private String accountAlias;
     private String bankCodeStd;
     private String bankCodeSub;
     private String bankName;
     private String savingsBankName;
-    private String HolderName;
-    private String HolderType;
-    private String type;
+    private String holderName;
+    private String holderType;
+    private String accountType;
     private String accountNo;
     private String inquiryAgreeYn;
     private String inquiryAgreeDt;
     private String transferAgree_yn;
     private String transferAgreeDt;
-    private String State;
+    private String state;
     private String createDt;
     private String modifyDt;
     private List<AccountHist> accountHists = new ArrayList();
