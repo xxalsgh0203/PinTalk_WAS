@@ -137,5 +137,5 @@ public class Param extends BaseEntity {
     private String state;
     private String createDt;
     private String modifyDt;
-    private List<AccountHist> accountHists = new ArrayList();
+//    private List<AccountHist> accountHists = new ArrayList();
 }
