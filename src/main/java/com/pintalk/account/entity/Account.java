@@ -80,8 +80,8 @@ public class Account {
     @Column(columnDefinition = "varchar(14) not null comment '계좌수정 일시'")
     private String modifyDt;
 
-    @OneToMany(mappedBy = "account")
-    private List<AccountHist> accountHists = new ArrayList<>();
+//    @OneToMany(mappedBy = "account")
+//    private List<AccountHist> accountHists = new ArrayList<>();
 
 
 
