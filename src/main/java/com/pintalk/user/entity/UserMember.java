@@ -94,7 +94,7 @@ public class UserMember extends BaseEntity {
     private String modifyDate;
 
     @Column(columnDefinition = "varchar(2) null comment '사용자 등록계좌 개수'")
-    private String resCnt;
+    private int resCnt;
 
 
 }
