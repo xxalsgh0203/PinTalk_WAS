@@ -180,18 +180,16 @@ public class UserService {
                     }
                 }
 
-                /**
-                 * 테스트
-                 */
-//                resultMap.put("admin_yn", "N");
-//                resultMap.put("month", "12");
-//                resultMap.put("year", "1212");
-//                resultMap.put("day", "12");
-//                resultMap.put("resCnt", "1");
+                //주민번호 뒷자리(1번째자리) 값에 따라 생년이 바뀌는 로직
+                String year = "";
+                switch (guserMember.getSsn().substring(6,7)) {
+                    case "1": case "2": case "5": case "6": year="19"; break;
+                    case "3": case "4": case "7": case "8": year="20"; break;
+                }
 
                 result = UserMember.builder()
                         .no(no)
-                        .id((String) resultMap.get("id"))
+                        .id(guserMember.getId())
                         .gender((String) resultMap.get("gender"))
                         .address((String) resultMap.get("address"))
                         .address1((String) resultMap.get("address1"))
@@ -206,11 +204,11 @@ public class UserService {
                         .name((String) resultMap.get("name"))
                         .email((String) resultMap.get("email"))
                         .saveStatus((String) resultMap.get("saveStatus"))
-                        .admin_yn((String) resultMap.get("admin_yn"))
-                        .resCnt((String) resultMap.get("resCnt"))
-                        .year((String) resultMap.get("year"))
-                        .month((String) resultMap.get("month"))
-                        .day((String) resultMap.get("day"))
+                        .admin_yn(guserMember.getAdmin_yn())
+                        .resCnt(guserMember.getResCnt())
+                        .year(year)
+                        .month(((String) resultMap.get("ssn")).substring(3,4))
+                        .day(((String) resultMap.get("ssn")).substring(5,6))
                         .signDate(guserMember.getSignDate())
                         .modifyDate(util.dateNowToStr("yyyyMMDD"))
                         .build();
@@ -260,9 +258,21 @@ public class UserService {
      */
     public boolean userMemberInsert(HashMap resMap) throws ParseException {
         log.debug("==================UserService.userMemberInsert.START==================");
+
         String ssn = (String) resMap.get("ssn");
         resMap.put("ssn1", ssn.substring(0, 6));
         resMap.put("ssn2", ssn.substring(6, 13));
+
+        //주민번호 뒷자리(1번째자리) 값에 따라 생년이 바뀌는 로직
+        String year = "";
+        switch (ssn.substring(6,7)) {
+            case "1": case "2": case "5": case "6": year="19"; break;
+            case "3": case "4": case "7": case "8": year="20"; break;
+        }
+
+        resMap.put("year", year+ssn.substring(0, 2));
+        resMap.put("month", ssn.substring(2, 4));
+        resMap.put("day", ssn.substring(4, 6));
 
         LocalDate seoulNow = LocalDate.now(ZoneId.of("Asia/Seoul"));
         String signDate = util.setDateFormatStr(seoulNow.toString(), "yyyy-MM-dd", "yyyyMMdd");
