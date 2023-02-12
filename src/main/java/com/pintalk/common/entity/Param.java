@@ -46,7 +46,6 @@ public class Param extends BaseEntity {
         param.setSignDateEnd(param.getSignDateEnd());
         param.setModifyDateStart(param.getModifyDateStart());
         param.setModifyDateEnd(param.getModifyDateEnd());
-        param.setStatus(param.getStatus());
         param.setSaveStatus(param.getSaveStatus());
 
         return param;

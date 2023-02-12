@@ -256,11 +256,11 @@ public class UserService {
         resMap.put("signDate", signDate);
         resMap.put("modifyDate", signDate);
         resMap.put("password", webSecurityConfig.getPasswordEncoder().encode((String) resMap.get("password")));
+
         /**
-         * Test
+         * 테스트
          */
-        resMap.put("status", "A");
-        resMap.put("saveStatus", "A");
+        resMap.put("admin_yn", "N");
 
         ObjectMapper objectMapper = new ObjectMapper();
         UserMember userMember = objectMapper.convertValue(resMap, UserMember.class);
