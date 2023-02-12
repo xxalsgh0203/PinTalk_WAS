@@ -56,6 +56,15 @@ public class UserMember extends BaseEntity {
     @Column(columnDefinition = "varchar(7) not null comment '주민번호(뒷자리)'")
     private String ssn2;
 
+    @Column(columnDefinition = "varchar(4) not null comment '생년월일(생년)'")
+    private String year;
+
+    @Column(columnDefinition = "varchar(2) not null comment '생년월일(월)'")
+    private String month;
+
+    @Column(columnDefinition = "varchar(2) not null comment '생년월일(일)'")
+    private String day;
+
     @Column(columnDefinition = "varchar(3) null comment '휴대폰 번호 앞자리'")
     private String phone1;
     @Column(columnDefinition = "varchar(4) null comment '휴대폰 번호 중간자리'")

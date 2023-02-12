@@ -47,6 +47,8 @@ public class Param extends BaseEntity {
         param.setModifyDateStart(param.getModifyDateStart());
         param.setModifyDateEnd(param.getModifyDateEnd());
         param.setSaveStatus(param.getSaveStatus());
+        param.setAdmin_yn(param.getAdmin_yn());
+        param.setResCnt(param.getResCnt());
 
         return param;
     }
@@ -110,7 +112,10 @@ public class Param extends BaseEntity {
     private String signDateEnd;     // 가입일자 끝
     private String modifyDateStart; // 수정일자 시작
     private String modifyDateEnd;   // 수정일자 끝
-
+    
+    private String admin_yn;        // 관리자 여부
+    private String resCnt;          // 사용자 등록계좌 개수
+    
     private LocalDateTime reg_Date;
     private LocalDateTime update_Date;
 
