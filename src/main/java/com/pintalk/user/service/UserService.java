@@ -180,6 +180,15 @@ public class UserService {
                     }
                 }
 
+                /**
+                 * 테스트
+                 */
+//                resultMap.put("admin_yn", "N");
+//                resultMap.put("month", "12");
+//                resultMap.put("year", "1212");
+//                resultMap.put("day", "12");
+//                resultMap.put("resCnt", "1");
+
                 result = UserMember.builder()
                         .no(no)
                         .id((String) resultMap.get("id"))
@@ -197,6 +206,11 @@ public class UserService {
                         .name((String) resultMap.get("name"))
                         .email((String) resultMap.get("email"))
                         .saveStatus((String) resultMap.get("saveStatus"))
+                        .admin_yn((String) resultMap.get("admin_yn"))
+                        .resCnt((String) resultMap.get("resCnt"))
+                        .year((String) resultMap.get("year"))
+                        .month((String) resultMap.get("month"))
+                        .day((String) resultMap.get("day"))
                         .signDate(guserMember.getSignDate())
                         .modifyDate(util.dateNowToStr("yyyyMMDD"))
                         .build();
