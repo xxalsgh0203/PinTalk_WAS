@@ -1,5 +1,6 @@
 package com.pintalk.account.entity;
 
+import com.pintalk.common.entity.BaseEntity;
 import com.pintalk.user.entity.UserMember;
 import lombok.*;
 
@@ -14,12 +15,13 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Account {
+@ToString
+public class Account extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "ACCOUNT_GENERATOR")
     @Column(columnDefinition = "int not null comment '계좌_SEQ'")
-    private Integer accountSeq;
+    private Integer no;
 
     @ManyToOne
     @JoinColumn(name = "user_member_no")
