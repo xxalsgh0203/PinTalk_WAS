@@ -45,7 +45,7 @@ public class AccountController {
         HashMap result_hs = new HashMap();
 
 
-        Page list = null;
+        Page<Account> list = null;
         if(param.getParamObject(param) == null){
             list = accountService.accountList(pageable);
         } else {
@@ -89,17 +89,18 @@ public class AccountController {
         return result_li;
     }
 
-//    /**
-//     * 계좌 신규 처리
-//     * @param hashMap
-//     * @throws ParseException
-//     */
-//    @RequestMapping(value = "/accountInsert", method = RequestMethod.POST)
-//    public boolean getAccountInsert(@RequestBody HashMap hashMap) throws ParseException {
-//        log.debug("==================AccountController.getAccountInsert.START==================");
-//        log.debug("==================AccountController.getAccountInsert.END==================");
-//        return accountService.accountInsert(hashMap);
-//    }
+    /**
+     * 계좌 신규 처리
+     * @param hashMap
+     * @throws ParseException
+     */
+    @RequestMapping(value = "/accountInsert", method = RequestMethod.POST)
+    public boolean getAccountInsert(@RequestBody HashMap hashMap) throws ParseException {
+        log.debug("==================AccountController.getAccountInsert.START==================");
+        accountService.accountInsert(hashMap);
+        log.debug("==================AccountController.getAccountInsert.END==================");
+        return true;
+    }
 
 //    /**
 //     * 계좌상세 페이지 수정 처리
