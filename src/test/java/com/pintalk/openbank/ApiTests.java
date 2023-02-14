@@ -1,4 +1,4 @@
-package com.pintalk.openbanking;
+package com.pintalk.openbank;
 
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
@@ -53,10 +53,22 @@ public class ApiTests {
             JSONObject obj = new JSONObject(sb.toString()); // json으로 변경 (역직렬화)
             System.out.println("JSON object = "+ obj);
 
+//            Openb
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+//    @Test
+//    public void accountRegister(){
+//
+//        String  requestURL = "https://testapi.openbanking.or.kr/v2.0/token?";
+//        requestURL += client_id + "client_secret=";
+//        requestURL += client_secret + "scope=";
+//        requestURL += scope + "grant_type=";
+//        requestURL += grant_type;
+//
+//    }
 
 }
