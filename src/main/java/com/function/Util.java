@@ -104,5 +104,16 @@ public class Util {
         }
         return result;
     }
+    /**
+     * 현재시간 문자열 반환(patten)
+     * @param formatPatten
+     * @return
+     */
+    public String toNowFormat(String formatPatten) {
+        SimpleDateFormat format1 = new SimpleDateFormat (formatPatten);
+        Date time = new Date();
+        String time_str = format1.format(time);
+        return time_str;
+    }
 
 }
