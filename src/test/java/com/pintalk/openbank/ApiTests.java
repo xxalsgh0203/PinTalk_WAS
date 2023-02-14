@@ -1,30 +1,45 @@
 package com.pintalk.openbank;
 
+import com.pintalk.openbank.entity.Token;
+import com.pintalk.openbank.repository.TokenRepository;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.stereotype.Component;
+import org.springframework.test.context.TestPropertySource;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
 @SpringBootTest
+@Component
+@TestPropertySource("classpath:config.properties")
 public class ApiTests {
+
+    @Autowired
+    TokenRepository tokenRepository;
+
+    @Value("${OpenBank-Client-Id}")
+    private String client_id;
+    @Value("${OpenBank-Client-Secret}")
+    private String client_secret;
+    @Value("${OpenBank-Scope}")
+    private String scope;
+    @Value("${OpenBank-Grant-Type}")
+    private String grant_type;
 
     @Test
     //오픈뱅킹 토큰발급
     public void Token() {
 
-        String client_id = "8757fc57-8765-48ab-a705-48f26112eb63&";
-        String client_secret = "c18084d6-1c45-4872-8c12-3b1f60d84df1&";
-        String scope = "oob&";
-        String grant_type = "client_credentials";
-
-
         String  requestURL = "https://developers.kftc.or.kr/proxy/oauth/2.0/token?client_id=";
-                requestURL += client_id + "client_secret=";
-                requestURL += client_secret + "scope=";
-                requestURL += scope + "grant_type=";
+                requestURL += client_id + "&client_secret=";
+                requestURL += client_secret + "&scope=";
+                requestURL += scope + "&grant_type=";
                 requestURL += grant_type;
 
         try {
@@ -51,10 +66,15 @@ public class ApiTests {
             }
 
             JSONObject obj = new JSONObject(sb.toString()); // json으로 변경 (역직렬화)
-            System.out.println("JSON object = "+ obj);
+            Token token = new Token();
 
-//            Openb
+            token.setAccess_token((String) obj.get("access_token"));
+            token.setClient_use_code((String) obj.get("client_use_code"));
+            token.setScope((String) obj.get("scope"));
+            token.setToken_type((String) obj.get("token_type"));
+            token.setExpires_in((Integer) obj.get("expires_in"));
 
+            tokenRepository.save(token);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -70,5 +90,13 @@ public class ApiTests {
 //        requestURL += grant_type;
 //
 //    }
+
+    @Test
+    public void testConfig(@Value("${OpenBank-Client-Id}") String ss){
+
+        System.out.println(ss);
+
+
+    }
 
 }
