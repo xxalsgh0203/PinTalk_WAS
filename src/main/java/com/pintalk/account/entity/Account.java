@@ -1,5 +1,6 @@
 package com.pintalk.account.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.pintalk.common.entity.BaseEntity;
 import com.pintalk.user.entity.UserMember;
 import lombok.*;
@@ -12,10 +13,9 @@ import java.util.List;
 @Table(name = "account")
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
-@ToString
+@AllArgsConstructor
+@RequiredArgsConstructor
 public class Account extends BaseEntity {
 
     @Id
@@ -23,8 +23,9 @@ public class Account extends BaseEntity {
     @Column(columnDefinition = "int not null comment '계좌_SEQ'")
     private Integer no;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_member_no")
+    @JsonBackReference
     private UserMember userMember;
 
 
@@ -82,8 +83,8 @@ public class Account extends BaseEntity {
     @Column(columnDefinition = "varchar(14) not null comment '계좌수정 일시'")
     private String modifyDt;
 
-//    @OneToMany(mappedBy = "account")
-//    private List<AccountHist> accountHists = new ArrayList<>();
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
+    private List<AccountHist> accountHists = new ArrayList<>();
 
 
 

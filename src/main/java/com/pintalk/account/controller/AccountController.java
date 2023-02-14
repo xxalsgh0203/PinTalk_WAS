@@ -37,7 +37,7 @@ public class AccountController {
     @RequestMapping(method = RequestMethod.GET, path = {"/accountList","/accountListForm"})
     public List getAccountList(
             @PageableDefault(page = 0, size = 10, sort = "no", direction = Sort.Direction.DESC) Pageable pageable
-            , Param param
+            ,Param param
     ) throws ParseException {
         log.debug("==================AccountController.getAccountList.START==================");
 
@@ -45,14 +45,13 @@ public class AccountController {
         HashMap result_hs = new HashMap();
 
 
-        Page<Account> list = null;
+        Page list = null;
         if(param.getParamObject(param) == null){
             list = accountService.accountList(pageable);
         } else {
             list = accountService.accountListSearch(param, pageable);
         }
-
-        log.info("검색 리스트 : " + list);
+        log.debug("검색 리스트 : " + list);
         log.debug("=======================================");
 
         int currPage = list.getPageable().getPageNumber();
@@ -99,7 +98,6 @@ public class AccountController {
 //    public boolean getAccountInsert(@RequestBody HashMap hashMap) throws ParseException {
 //        log.debug("==================AccountController.getAccountInsert.START==================");
 //        log.debug("==================AccountController.getAccountInsert.END==================");
-//
 //        return accountService.accountInsert(hashMap);
 //    }
 

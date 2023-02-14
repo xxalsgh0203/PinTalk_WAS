@@ -1,6 +1,5 @@
 package com.pintalk.common.entity;
 
-import com.pintalk.account.entity.AccountHist;
 import com.pintalk.user.entity.UserMember;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,12 +8,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter
-@ToString
+@ToString(exclude = "param")
 public class Param extends BaseEntity {
 
     public Param getParamObject(Param param){

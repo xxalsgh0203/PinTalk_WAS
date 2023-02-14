@@ -6,7 +6,6 @@ import com.pintalk.account.component.AccountSpecification;
 import com.pintalk.account.entity.Account;
 import com.pintalk.account.repository.AccountRepository;
 import com.pintalk.common.entity.Param;
-import com.pintalk.user.entity.UserMember;
 import com.pintalk.user.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -76,9 +75,9 @@ public class AccountService {
 
         AccountSpecification accountSpecification = new AccountSpecification();
 
-        Page<Account> result = null;
         //결과값
-        result = repository.findAll(accountSpecification.searchWith(searchKeys), pageable);
+        Page<Account> result = null;
+        result = repository.findAll(accountSpecification.searchWith(searchMap), pageable);
         log.debug("==================AccountService.accountListSearch.END==================");
         return result;
     }
@@ -97,50 +96,47 @@ public class AccountService {
         return result;
     }
 
-//    /**
-//     * 계좌 신규 등록
-//     *
-//     * @param
-//     * @return
-//     */
-//    public boolean accountInsert(HashMap hashMap) throws ParseException {
-//        log.debug("==================AccountService.accountInsert.START==================");
+    /**
+     * 계좌 신규 등록
+     *
+     * @param
+     * @return
+     */
+    public boolean accountInsert(HashMap hashMap) throws ParseException {
+        log.debug("==================AccountService.accountInsert.START==================");
+
+        System.out.println("param : " + hashMap);
+
+        //현재 시간(yyyyMMddHHmmss) 문자열
+        String time = util.toNowFormat("yyyyMMddHHmmss");
+
+        hashMap.put("createDt",time);
+        hashMap.put("modifyDt",time);
+
+//        Stream<Map.Entry<String, Object>> entries = hashMap.keySet().stream();
 //
-//        System.out.println("param : " + hashMap);
-//
-//        String time = util.toNowFormat("yyyyMMddHHmmss");
-//
-//        hashMap.put("createDt",time);
-//        hashMap.put("modifyDt",time);
-//
-//        UserMember userMember = new UserMember();
-//        for(Object key : hashMap.keySet()){
-//            System.out.println(key);
-//            if(key.equals("user_member_no")) {
-//                userMember.setNo((Integer) hashMap.get("user_member_no"));
-//                hashMap.remove("user_member_no");
-//            }
-//        }
-//
-//        System.out.println("hashMaphashMaphashMap : " + hashMap);
-////        System.out.println("hashMap.get(\"user_member_no\") : " + hashMap.get("user_member_no"));
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        Account account = objectMapper.convertValue(hashMap, Account.class);
-//
-////        Optional<UserMember> userMember = userRepository.findById((Integer) hashMap.get("user_member_no"));
-////        account.setUserMember(userMember);
-//
-////        System.out.println("userMember : " + userMember);
-//        System.out.println("account : " + account.toString());
-//
-//        try {
-//            repository.save(account);
-//        } catch (Exception e) {
-//            return false;
-//        }
-//        log.debug("==================AccountService.accountInsert.END==================");
-//        return true;
-//    }
+//        entries.collect()
+
+
+
+        System.out.println("1");
+        ObjectMapper objectMapper = new ObjectMapper();
+        System.out.println("2");
+        Account account = objectMapper.convertValue(hashMap, Account.class);
+        System.out.println("3");
+//        account.setUserMember(userMember);
+        System.out.println("4");
+
+        System.out.println("account : " + account);
+
+        try {
+            repository.save(account);
+        } catch (Exception e) {
+            return false;
+        }
+        log.debug("==================AccountService.accountInsert.END==================");
+        return true;
+    }
 
 //    /**
 //     * 계좌상세 페이지 수정 처리
