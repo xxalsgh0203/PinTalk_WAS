@@ -15,7 +15,7 @@ import java.util.List;
 @Setter
 @Builder
 @AllArgsConstructor
-@RequiredArgsConstructor
+@NoArgsConstructor
 public class Account extends BaseEntity {
 
     @Id
