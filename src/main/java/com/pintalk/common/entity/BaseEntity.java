@@ -24,11 +24,11 @@ public abstract class BaseEntity {
 
     //생성일 자동 저장
     @CreatedDate
-    @Column(columnDefinition = "datetime not null comment '가입날짜'", updatable = false)
+    @Column(columnDefinition = "datetime not null comment '등록날짜'", updatable = false)
     private LocalDateTime reg_Date;
 
     //마지막 수정시간 자동저장
     @LastModifiedDate
-    @Column(columnDefinition = "datetime not null comment '정보수정 날짜'")
+    @Column(columnDefinition = "datetime not null comment '수정날짜'")
     private LocalDateTime update_Date;
 }
