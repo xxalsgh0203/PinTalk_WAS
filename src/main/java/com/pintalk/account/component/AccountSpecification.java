@@ -25,7 +25,7 @@ public class AccountSpecification {
         List<Predicate> predicate = new ArrayList<>();
 
         for (String key : searchKeyword.keySet()) {
-            if (key.equals("holder_name") || key.equals("account_no") || key.equals("address1") || key.equals("email") || key.equals("phone2") || key.equals("phone3")) {
+            if (key.equals("holder_name") || key.equals("account_no")) {
                 predicate.add(builder.like(root.get(key), "%" + searchKeyword.get(key) + "%"));
             } else {
                 predicate.add(builder.equal(root.get(key), searchKeyword.get(key)));

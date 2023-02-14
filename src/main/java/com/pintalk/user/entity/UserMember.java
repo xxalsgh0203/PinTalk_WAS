@@ -1,6 +1,7 @@
 package com.pintalk.user.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.pintalk.account.entity.Account;
 import com.pintalk.common.entity.BaseEntity;
 import lombok.*;
@@ -15,7 +16,6 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
 @Table(name = "USER_MEMBER", uniqueConstraints = {
         @UniqueConstraint(
                 name = "ID_UNIQUE"
@@ -26,6 +26,7 @@ import java.util.List;
                 , columnNames ={"ssn"}
         )
 })
+@ToString(exclude = "userMember")
 public class UserMember extends BaseEntity {
 
     @Id
@@ -33,8 +34,8 @@ public class UserMember extends BaseEntity {
     @Column(columnDefinition = "int not null comment '유저 고유번호'")
     private Integer no;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "userMember")
+    @OneToMany(mappedBy = "userMember", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<Account> accounts = new ArrayList<>();
 
 
@@ -94,7 +95,7 @@ public class UserMember extends BaseEntity {
     private String modifyDate;
 
     @Column(columnDefinition = "varchar(2) null comment '사용자 등록계좌 개수'")
-    private int resCnt;
+    private Integer resCnt;
 
 
 }
