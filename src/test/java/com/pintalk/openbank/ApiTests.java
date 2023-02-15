@@ -2,23 +2,37 @@ package com.pintalk.openbank;
 
 import com.pintalk.openbank.entity.Token;
 import com.pintalk.openbank.repository.TokenRepository;
+import com.pintalk.user.entity.QUserMember;
+import com.pintalk.user.entity.UserMember;
+import com.querydsl.jpa.impl.JPAQuery;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Component;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @Component
 @TestPropertySource("classpath:config.properties")
+@Transactional
 public class ApiTests {
+
+    @Autowired
+    EntityManager entityManager;
+
 
     @Autowired
     TokenRepository tokenRepository;
@@ -80,22 +94,68 @@ public class ApiTests {
         }
     }
 
-//    @Test
-//    public void accountRegister(){
-//
-//        String  requestURL = "https://testapi.openbanking.or.kr/v2.0/token?";
-//        requestURL += client_id + "client_secret=";
-//        requestURL += client_secret + "scope=";
-//        requestURL += scope + "grant_type=";
-//        requestURL += grant_type;
-//
-//    }
 
     @Test
-    public void testConfig(@Value("${OpenBank-Client-Id}") String ss){
+    public void accountRegister(){
 
-        System.out.println(ss);
 
+
+
+
+
+
+        String  requestURL = "https://testapi.openbanking.or.kr/v2.0/token?";
+        requestURL += client_id + "client_secret=";
+        requestURL += client_secret + "scope=";
+        requestURL += scope + "grant_type=";
+        requestURL += grant_type;
+
+    }
+
+    @Test
+    public void jpaQuerydsl(){
+
+        List<Token> found = entityManager.createQuery("select p from Token p").getResultList();
+        System.out.println("found : " + found);
+
+    }
+
+    @Test
+    public void queryDsl_findPostsByMyCriteria_Three(){
+        JPAQuery<UserMember> query = new JPAQuery<>(entityManager);
+        QUserMember qUserMember = new QUserMember("u");
+
+        List<UserMember> userMembers = query.from(qUserMember)
+                .where(qUserMember.name.contains("새"))
+                .orderBy(qUserMember.no.desc())
+                .fetch();
+
+        assertThat(userMembers).hasSize(3);
+
+        System.out.println("userMembers : " + userMembers);
+
+    }
+    @Test
+    public void token2(){
+        JPAQuery<Token> query = new JPAQuery<>(entityManager);
+        QUserMember qUserMember = new QUserMember("u");
+
+        List<Token> userMembers = query.from(qUserMember)
+                .where(qUserMember.name.contains("새"))
+                .orderBy(qUserMember.no.desc())
+                .fetch();
+
+        assertThat(userMembers).hasSize(3);
+
+        System.out.println("userMembers : " + userMembers);
+
+    }
+    @Test
+    @Query("select a.no from Token a where a.no = (select max(u.no) from Token u) ")
+    public void token33(){
+
+        Token tokens = new Token();
+        System.out.println("ssss : " + tokens);
 
     }
 
