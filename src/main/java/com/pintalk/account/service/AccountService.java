@@ -6,6 +6,7 @@ import com.pintalk.account.component.AccountSpecification;
 import com.pintalk.account.entity.Account;
 import com.pintalk.account.repository.AccountRepository;
 import com.pintalk.common.entity.Param;
+import com.pintalk.user.entity.UserMember;
 import com.pintalk.user.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -104,38 +105,31 @@ public class AccountService {
      */
     public boolean accountInsert(HashMap hashMap) throws ParseException {
         log.debug("==================AccountService.accountInsert.START==================");
-
-        System.out.println("param : " + hashMap);
-
-        //현재 시간(yyyyMMddHHmmss) 문자열
-        String time = util.toNowFormat("yyyyMMddHHmmss");
-
-        hashMap.put("createDt",time);
-        hashMap.put("modifyDt",time);
-
-//        Stream<Map.Entry<String, Object>> entries = hashMap.keySet().stream();
-//
-//        entries.collect()
-
-
-
-        System.out.println("1");
-        ObjectMapper objectMapper = new ObjectMapper();
-        System.out.println("2");
-        Account account = objectMapper.convertValue(hashMap, Account.class);
-        System.out.println("3");
-//        account.setUserMember(userMember);
-        System.out.println("4");
-
-        System.out.println("account : " + account);
-
+        boolean result;
         try {
+            //현재 시간(yyyyMMddHHmmss) 문자열
+            String time = util.toNowFormat("yyyyMMddHHmmss");
+
+            hashMap.put("createDt",time);
+            hashMap.put("modifyDt",time);
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            Account account = objectMapper.convertValue(hashMap, Account.class);
+
+            UserMember userMember = new UserMember();
+            /**
+             * TEST
+             */
+            userMember.setNo(1);
+
+            account.setUserMember(userMember);
             repository.save(account);
+            result = true;
         } catch (Exception e) {
-            return false;
+            result = false;
         }
         log.debug("==================AccountService.accountInsert.END==================");
-        return true;
+        return result;
     }
 
 //    /**
