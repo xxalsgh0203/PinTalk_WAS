@@ -4,6 +4,7 @@ import com.pintalk.openbank.entity.Token;
 import com.pintalk.openbank.repository.TokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
 import org.json.JSONObject;
@@ -13,6 +14,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 @Service
+@PropertySource(value = "classpath:config.properties")
 public class OpenBankService {
 
     @Autowired
@@ -30,6 +32,10 @@ public class OpenBankService {
 
     //오픈뱅킹 토큰발급
     public void Token() {
+//        String client_id="8757fc57-8765-48ab-a705-48f26112eb63";
+//        String client_secret="c18084d6-1c45-4872-8c12-3b1f60d84df1";
+//        String scope="oob";
+//        String grant_type="client_credentials";
 
         String  requestURL = "https://developers.kftc.or.kr/proxy/oauth/2.0/token?client_id=";
         requestURL += client_id + "&client_secret=";
