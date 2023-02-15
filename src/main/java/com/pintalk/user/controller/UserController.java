@@ -130,7 +130,6 @@ public class UserController {
     }
     /**
      * 회원 신규 화면
-     * @throws ParseException
      */
     @RequestMapping(value = "/userMemberInsertView", method = RequestMethod.GET)
     public List getUserMemberInsertView() {

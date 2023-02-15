@@ -3,6 +3,7 @@ package com.pintalk.account.controller;
 import com.pintalk.account.entity.Account;
 import com.pintalk.account.service.AccountService;
 import com.pintalk.common.Service.ComCodeService;
+import com.pintalk.common.entity.ComCode;
 import com.pintalk.common.entity.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -86,6 +87,23 @@ public class AccountController {
         log.debug("============================");
         log.debug("최종 결과값 : " +result_li);
         log.debug("==================AccountController.accountDetail.END==================");
+        return result_li;
+    }
+
+    /**
+     * 계좌 등록화면
+     */
+    @RequestMapping(value = "/accountInsertView", method = RequestMethod.GET)
+    public List getAccountInsertView() {
+        log.debug("==================AccountController.getAccountInsertView.START==================");
+        List result_li = new ArrayList();
+        List<ComCode> holderType = comCodeService.getComCode("HOLDER_TYPE");
+        result_li.add(holderType);
+        List<ComCode> state = comCodeService.getComCode("STATE");
+        result_li.add(state);
+        List<ComCode> accountType = comCodeService.getComCode("ACCOUNT_TYPE");
+        result_li.add(accountType);
+        log.debug("==================AccountController.getAccountInsertView.END==================");
         return result_li;
     }
 
