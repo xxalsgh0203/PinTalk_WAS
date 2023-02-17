@@ -2,12 +2,12 @@ package com.pintalk.openbank.service;
 
 import com.pintalk.openbank.entity.Token;
 import com.pintalk.openbank.repository.TokenRepository;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
-import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -20,15 +20,18 @@ public class OpenBankService {
     @Autowired
     TokenRepository tokenRepository;
 
-    @Value("${OpenBank-Client-Id}")
+    @Value("${OpenBank.ClientId}")
     private String client_id;
-
-    @Value("${OpenBank-Client-Secret}")
+    @Value("${OpenBank.ClientSecret}")
     private String client_secret;
-    @Value("${OpenBank-Scope}")
+    @Value("${OpenBank.TokenScope}")
     private String scope;
-    @Value("${OpenBank-Grant-Type}")
+    @Value("${OpenBank.GrantType}")
     private String grant_type;
+    @Value("${OpenBank.redirectUri}")
+    private String redirectUri;
+    @Value("${OpenBank.AuthorizeScope}")
+    private String authorizeScope;
 
     //오픈뱅킹 토큰발급
     public void Token() {
@@ -77,5 +80,40 @@ public class OpenBankService {
         }
     }
 
+    //사용자인증
+    public String authorize() {
+
+        String result ="";
+
+        String requestURL = "https://developers.kftc.or.kr/proxy/oauth/2.0/authorize?";
+        requestURL += "response_type=code";
+        requestURL += "&client_id="+client_id;
+        requestURL += "&redirect_uri="+redirectUri;
+        requestURL += "&scope="+authorizeScope;
+        requestURL += "&client_info=test";
+        requestURL += "&state=b80BLsfigm9OokPTjy03elbJqRHOfGSY";
+        requestURL += "&auth_type=0";
+        requestURL += "&cellphone_cert_yn=Y";
+        requestURL += "&authorized_cert_yn=Y";
+        requestURL += "&account_hold_auth_yn=N";
+        requestURL += "&register_info=A";
+        try {
+            URL url = new URL(requestURL);
+
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+            conn.setRequestMethod("GET"); // http 메서드
+            conn.setRequestProperty("Accept", "*/*"); // header Accept 정보
+
+            conn.setDoOutput(true); // 서버로부터 받는 값이 있다면 true
+
+            if(conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                result = conn.getHeaderField("Location");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 
 }
